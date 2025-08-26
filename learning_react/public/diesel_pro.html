@@ -1,4 +1,15 @@
-/* Estilos generales */
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>turbobujiasPro - Bujías y Precalentadores Diesel</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" href=
+    <script src="https://www.paypal.com/sdk/js?client-id=TU_CLIENT_ID_PAYPAL&currency=USD"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <style>
+  /* Estilos generales */
 :root {
     --primary-color: #2c3e50;
     --secondary-color: #e74c3c;
@@ -49,15 +60,14 @@ body {
 
 /* Header */
 header {
-  background: #fff;
-  box-shadow: 0 2px 8px rgba(44,62,80,0.08);
-  padding: 1rem 0;
-  position: sticky;
-  top: 0;
-  z-index: 100;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    padding: 15px 0;
+                
 }
     header img {
     width: 150px;
@@ -81,16 +91,16 @@ header {
 }
 
 nav ul {
-  display: flex;
-  gap: 1.5rem;
-  list-style: none;
+    display: flex;
+    list-style: none;
 }
 
 nav ul li a {
-  color: var(--primary-color);
-  text-decoration: none;
-  font-weight: 500;
-  transition: color 0.2s;
+    color: var(--dark-color);
+    text-decoration: none;
+    padding: 10px 15px;
+    font-weight: 600;
+    transition: color 0.3s;
 }
 
 nav ul li a:hover {
@@ -98,27 +108,42 @@ nav ul li a:hover {
 }
 
 .cart-icon {
-  cursor: pointer;
-  position: relative;
+    position: relative;
+    cursor: pointer;
+    font-size: 1.5rem;
+    color: var(--dark-color);
 }
 
 .cart-count {
-  background: var(--secondary-color);
-  color: #fff;
-  border-radius: 50%;
-  padding: 2px 7px;
-  font-size: 0.8rem;
-  position: absolute;
-  top: -8px;
-  right: -10px;
+    position: absolute;
+    top: -10px;
+    right: -10px;
+    background-color: var(--secondary-color);
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.7rem;
+    font-weight: bold;
+}
+
+.mobile-menu {
+    display: none;
+    font-size: 1.5rem;
+    cursor: pointer;
 }
 
 /* Hero section */
 .hero {
-    background: linear-gradient(90deg, #3498db 0%, #2ecc71 100%);
-    color: #fff;
-    padding: 3rem 0;
+    background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');
+    background-size: cover;
+    background-position: center;
+    color: white;
     text-align: center;
+    padding: 150px 0 100px;
     margin-top: 60px;
 }
 
@@ -182,17 +207,16 @@ nav ul li a:hover {
 }
 
 .product-card {
-  background: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 8px rgba(44,62,80,0.08);
-  padding: 1rem;
-  margin: 1rem;
-  transition: transform 0.2s, box-shadow 0.2s;
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .product-card:hover {
-  transform: translateY(-5px) scale(1.03);
-  box-shadow: 0 6px 20px rgba(44,62,80,0.15);
+    transform: translateY(-10px);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
 }
 
 .product-image {
@@ -201,8 +225,9 @@ nav ul li a:hover {
 }
 
 .product-image img {
-    max-width: 100%;
-    border-radius: 6px;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
     transition: transform 0.5s;
 }
 
@@ -315,20 +340,22 @@ nav ul li a:hover {
 
 /* Cart sidebar */
 .cart-sidebar {
-  position: fixed;
-  right: -400px;
-  top: 0;
-  width: 350px;
-  height: 100%;
-  background: #fff;
-  box-shadow: -2px 0 8px rgba(44,62,80,0.08);
-  transition: right 0.3s;
-  z-index: 200;
-  padding: 1rem;
-  overflow-y: auto;
+    position: fixed;
+    top: 0;
+    right: -400px;
+    width: 100%;
+    max-width: 400px;
+    height: 100vh;
+    background-color: white;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+    transition: right 0.3s ease;
+    z-index: 1100;
+    display: flex;
+    flex-direction: column;
 }
+
 .cart-sidebar.active {
-  right: 0;
+    right: 0;
 }
 
 .cart-header {
@@ -448,14 +475,21 @@ nav ul li a:hover {
 }
 
 .overlay {
-  display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 1050;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s;
 }
+
 .overlay.active {
-  display: block;
-  position: fixed;
-  inset: 0;
-  background: rgba(44,62,80,0.2);
-  z-index: 150;
+    opacity: 1;
+    visibility: visible;
 }
 
 /* Footer */
@@ -530,3 +564,118 @@ footer {
         align-items: center;
     }
 }
+
+  </style>
+</head>
+<body>
+    <header>
+        <img src="https://i.postimg.cc/KYJCxC2Y/LOGOTIPOFONDOBLANCO.png" alt="Turbobujias">. 
+        
+        
+        <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+  <input type="hidden" name="cmd" value="_s-xclick" />
+  <input type="hidden" name="hosted_button_id" value="8NYMNJTYXLX5W" />
+  <input type="hidden" name="currency_code" value="USD" />
+  <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" title="PayPal es una forma segura y fácil de pagar en línea." alt="Comprar ahora" />
+</form>
+                
+                
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#inicio">Inicio</a></li>
+                    <li><a href="#productos">Productos</a></li>
+                    <li><a href="#nosotros">Nosotros</a></li>
+                    <li><a href="#contacto">Contacto</a></li>
+                </ul>
+            </nav>
+            <div class="cart-icon">
+                <i class="fas fa-shopping-cart"></i>
+                <span class="cart-count">0</span>
+            </div>
+            <div class="mobile-menu">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero" id="inicio">
+        <div class="container">
+            <h2> bujias y Repuestos Diesel </h2>
+            <p>Bujías, precalentadores y todo lo que necesitas para motores diesel</p>
+            <a href="#productos" class="btn">Ver Productos</a>
+        </div>
+    </section>
+
+    <section class="products" id="productos">
+        <div class="container">
+            <h2>Nuestros Productos</h2>
+            <div class="filter-options">
+                <button class="filter-btn active" data-filter="all">Todos</button>
+                <button class="filter-btn" data-filter="bujias">Bujías</button>
+                <button class="filter-btn" data-filter="precalentadores">Precalentadores</button>
+                <button class="filter-btn" data-filter="repuestos">Repuestos</button>
+            </div>
+            
+            <div class="import-section">
+                <input type="file" id="excel-file" accept=".xlsx, .xls, .xlsm, .xlsb" style="display: none;">
+                <button id="import-btn" class="btn"><i class="fas fa-file-excel"></i> Importar Inventario</button>
+            </div>
+            
+            <div class="product-grid" id="product-grid">
+                <!-- Los productos se cargarán dinámicamente -->
+            </div>
+        </div>
+    </section>
+
+    <section class="about" id="nosotros">
+        <div class="container">
+            <h2>Sobre Nosotros</h2>
+            <p>Somos especialistas en repuestos diesel con más de 15 años de experiencia en el mercado. Ofrecemos productos de la más alta calidad para garantizar el mejor rendimiento de los motores diesel.</p>
+        </div>
+    </section>
+
+    <section class="contact" id="contacto">
+        <div class="container">
+            <h2>Contacto</h2>
+            <form id="contact-form">
+                <input type="text" placeholder="Nombre" required>
+                <input type="email" placeholder="Email" required>
+                <textarea placeholder="Mensaje" required></textarea>
+                <button type="submit" class="btn">Enviar Mensaje</button>
+            </form>
+        </div>
+    </section>
+
+    <div class="cart-sidebar">
+        <div class="cart-header">
+            <h3>Carrito de Compras</h3>
+            <button class="close-cart">&times;</button>
+        </div>
+        <div class="cart-items">
+            <!-- Los items del carrito se añadirán aquí -->
+        </div>
+        <div class="cart-total">
+            <h4>Total: <span>$0.00</span></h4>
+        </div>
+        <div id="paypal-button-container"></div>
+        <button class="<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_blank">
+  <input type="hidden" name="cmd" value="_s-xclick" />
+  <input type="hidden" name="hosted_button_id" value="9TRR6Y3FRYSYY" />
+  <input type="hidden" name="currency_code" value="USD" />
+  <input type="image" src="https://www.paypalobjects.com/es_XC/i/btn/btn_cart_SM.gif" border="0" name="submit" title="PayPal es una forma segura y fácil de pagar en línea." alt="Agregar al carrito" />
+</form>">Vaciar Carrito</button>
+    </div>
+    <div class="overlay"></div>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 turbobujiasPro. Todos los derechos reservados.</p>
+        </div>
+    </footer>
+  
+  
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,18 +1,11 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.jsx'
-import '@fortawesome/fontawesome-free/css/all.min.css';
 import React from "react";
-import store from "./store";
+import { useSelector } from "react-redux";
+import { addToCart } from "../store/cartSlice";
 
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <App />
-  </StrictMode>,
-)
-
-export default function Header() {
+export default function Header({ onCartClick }) {
+  const cartCount = useSelector((state) =>
+    state.cart.items.reduce((a, b) => a + b.qty, 0)
+  );
   return (
     <header>
       <img
@@ -52,9 +45,9 @@ export default function Header() {
           </li>
         </ul>
       </nav>
-      <div className="cart-icon">
+      <div className="cart-icon" onClick={onCartClick}>
         <i className="fas fa-shopping-cart"></i>
-        <span className="cart-count">0</span>
+        <span className="cart-count">{cartCount}</span>
       </div>
       <div className="mobile-menu">
         <i className="fas fa-bars"></i>
