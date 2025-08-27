@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import logo from "../assets/react.svg"; // Cambia por tu logo si tienes otro
+import logo from "../assets/LOGOTIPOFONDONEGRO.png";
 
 export default function Header({ onCartClick }) {
   const items = useSelector((state) => state.cart.items);
@@ -25,9 +25,9 @@ export default function Header({ onCartClick }) {
       }}
     >
       <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
-        <img src={logo} alt="Diesel Pro Logo" style={{ height: 40 }} />
+        <img src={logo} alt="TurboBujias Logo" style={{ height: 50 }} />
         <div>
-          <h1 style={{ margin: 0, fontSize: "1.6rem" }}>Diesel Pro</h1>
+          <h1 style={{ margin: 0, fontSize: "1.6rem" }}>TurboBujias</h1>
           <a
             href="mailto:dieselpro@gmail.com"
             style={{

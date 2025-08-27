@@ -4,22 +4,45 @@ learning_react/
     vite.svg
   src/
     assets/
-      react.svg
+      logo.svg
+      sparkplug.jpg
+      glowplug.jpg
+      dieselpart.jpg
     components/
-      About.jsx
-      CartSidebar.jsx
-      Contact.jsx
-      Footer.jsx
-      Header.jsx
-      Hero.jsx
-      Products.jsx
+      layout/
+        Header.jsx
+        Footer.jsx
+      catalog/
+        ProductList.jsx
+        ProductCard.jsx
+        Filters.jsx
+        SearchBar.jsx
+      cart/
+        CartSidebar.jsx
+        CartIcon.jsx
+        Checkout.jsx
+      vehicle/
+        VehicleSelector.jsx
+      admin/
+        AdminPanel.jsx
+        ExcelUploader.jsx
+    pages/
+      Home.jsx
+      Catalog.jsx
+      ProductDetail.jsx
+      Cart.jsx
+      Checkout.jsx
+      Admin.jsx
+      NotFound.jsx
     store/
       cartSlice.js
+      productSlice.js
+      vehicleSlice.js
+      userSlice.js
       index.js
-    App.css
     App.jsx
-    index.css
     main.jsx
+    App.css
   .gitignore
   eslint.config.js
   index.html
