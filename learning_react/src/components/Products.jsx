@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import * as XLSX from "xlsx";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../store/cartSlice";
+import { toast } from "react-toastify";
 
 const INITIAL_PRODUCTS = [
   {
@@ -65,6 +66,11 @@ export default function Products() {
     reader.readAsArrayBuffer(file);
   };
 
+  const handleAdd = (product) => {
+    dispatch(addToCart({ ...product, quantity: 1 }));
+    toast.success(`${product.name} agregado al carrito`);
+  };
+
   return (
     <section className="products" id="productos">
       <div className="container">
@@ -123,7 +129,7 @@ export default function Products() {
                   <button
                     className="add-to-cart"
                     disabled={product.stock === 0}
-                    onClick={() => dispatch(addToCart(product))}
+                    onClick={() => handleAdd(product)}
                   >
                     Agregar
                   </button>

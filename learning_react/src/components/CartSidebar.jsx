@@ -1,13 +1,25 @@
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { removeFromCart, clearCart } from "../store/cartSlice";
+import { removeFromCart, clearCart, updateQuantity, selectCartTotal } from "../store/cartSlice";
+import { toast } from "react-toastify";
 import PaypalButton from "./PaypalButton";
+import PagoMovilButton from "./PagoMovilButton";
 
 export default function CartSidebar({ onClose, visible }) {
   const [showCheckout, setShowCheckout] = useState(false);
-  const cart = useSelector((state) => state.cart.items);
+  const items = useSelector((state) => state.cart.items);
+  const total = useSelector(selectCartTotal);
   const dispatch = useDispatch();
-  const total = cart.reduce((sum, item) => sum + item.price * item.qty, 0);
+
+  const handleRemove = (id, name) => {
+    dispatch(removeFromCart(id));
+    toast.info(`${name} eliminado del carrito`);
+  };
+
+  const handleClear = () => {
+    dispatch(clearCart());
+    toast.warn("Carrito vaciado");
+  };
 
   return (
     <>
@@ -19,8 +31,8 @@ export default function CartSidebar({ onClose, visible }) {
           </button>
         </div>
         <div className="cart-items">
-          {cart.length === 0 && <p>El carrito está vacío.</p>}
-          {cart.map((item) => (
+          {items.length === 0 && <p>El carrito está vacío.</p>}
+          {items.map((item) => (
             <div className="cart-item" key={item.id}>
               <div className="cart-item-image">
                 <img src={item.img} alt={item.name} />
@@ -33,10 +45,23 @@ export default function CartSidebar({ onClose, visible }) {
                 </div>
                 <button
                   className="remove-item"
-                  onClick={() => dispatch(removeFromCart(item.id))}
+                  onClick={() => handleRemove(item.id, item.name)}
                 >
                   Quitar
                 </button>
+                <input
+                  type="number"
+                  value={item.qty}
+                  min={1}
+                  onChange={(e) =>
+                    dispatch(
+                      updateQuantity({
+                        id: item.id,
+                        qty: Number(e.target.value),
+                      })
+                    )
+                  }
+                />
               </div>
             </div>
           ))}
@@ -46,24 +71,22 @@ export default function CartSidebar({ onClose, visible }) {
             Total: <span>${total.toFixed(2)}</span>
           </h4>
         </div>
-        <button className="clear-cart btn" onClick={() => dispatch(clearCart())}>
+        <button className="clear-cart btn" onClick={handleClear}>
           Vaciar Carrito
         </button>
-        <button
-          className="btn"
-          style={{ marginTop: "1em", width: "100%" }}
-          disabled={cart.length === 0}
-          onClick={() => setShowCheckout(true)}
-        >
-          Checkout
-        </button>
+        {items.length > 0 && (
+          <div style={{ marginTop: "1rem" }}>
+            <PagoMovilButton total={total} />
+            <PaypalButton total={total} />
+          </div>
+        )}
       </div>
       <div className={`overlay${visible ? " active" : ""}`} onClick={onClose}></div>
       {showCheckout && (
         <div className="modal-overlay" onClick={() => setShowCheckout(false)}>
           <div
             className="modal"
-            onClick={e => e.stopPropagation()}
+            onClick={(e) => e.stopPropagation()}
             style={{
               background: "#fff",
               padding: "2em",
@@ -71,7 +94,7 @@ export default function CartSidebar({ onClose, visible }) {
               maxWidth: "400px",
               margin: "10vh auto",
               boxShadow: "0 4px 24px rgba(0,0,0,0.18)",
-              position: "relative"
+              position: "relative",
             }}
           >
             <button
@@ -82,7 +105,7 @@ export default function CartSidebar({ onClose, visible }) {
                 background: "none",
                 border: "none",
                 fontSize: "1.5em",
-                cursor: "pointer"
+                cursor: "pointer",
               }}
               onClick={() => setShowCheckout(false)}
               aria-label="Cerrar"

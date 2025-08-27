@@ -1,41 +1,93 @@
-
 import React, { useState } from "react";
 import { useSelector } from "react-redux";
-import { addToCart } from "../store/cartSlice";
+import logo from "../assets/react.svg"; // Cambia por tu logo si tienes otro
 
 export default function Header({ onCartClick }) {
-  const cartCount = useSelector((state) =>
-    state.cart.items.reduce((a, b) => a + b.qty, 0)
-  );
+  const items = useSelector((state) => state.cart.items);
+  const totalCount = items.reduce((sum, item) => sum + item.quantity, 0);
   const [navActive, setNavActive] = useState(false);
 
   // Cierra el menú al hacer click en un enlace
   const handleNavClick = () => setNavActive(false);
 
+  // Cambia el número por el tuyo en formato internacional sin "+"
+  const whatsappNumber = "584121234567"; // Ejemplo: 584121234567 para Venezuela
+
   return (
-    <header>
-      <img src="https://i.postimg.cc/KYJCxC2Y/LOGOTIPOFONDOBLANCO.png" alt="Turbobujias" />
-      <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-        <input type="hidden" name="cmd" value="_s-xclick" />
-        <input type="hidden" name="hosted_button_id" value="8NYMNJTYXLX5W" />
-        <input type="hidden" name="currency_code" value="USD" />
-        <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" title="PayPal es una forma segura y fácil de pagar en línea." alt="Comprar ahora" />
-      </form>
-      <nav className={navActive ? "active" : ""}>
-        <ul>
-          <li><a href="#inicio" onClick={handleNavClick}>Inicio</a></li>
-          <li><a href="#productos" onClick={handleNavClick}>Productos</a></li>
-          <li><a href="#nosotros" onClick={handleNavClick}>Nosotros</a></li>
-          <li><a href="#contacto" onClick={handleNavClick}>Contacto</a></li>
-        </ul>
-      </nav>
-      <div className="cart-icon" onClick={onCartClick}>
-        <i className="fas fa-shopping-cart"></i>
-        <span className="cart-count">{cartCount}</span>
+    <header
+      style={{
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "center",
+        padding: "1rem 2rem",
+        background: "#222",
+        color: "#fff",
+      }}
+    >
+      <div style={{ display: "flex", alignItems: "center", gap: "1rem" }}>
+        <img src={logo} alt="Diesel Pro Logo" style={{ height: 40 }} />
+        <div>
+          <h1 style={{ margin: 0, fontSize: "1.6rem" }}>Diesel Pro</h1>
+          <a
+            href="mailto:dieselpro@gmail.com"
+            style={{
+              color: "#ffc107",
+              textDecoration: "none",
+              fontSize: "1rem",
+              fontWeight: "bold",
+              display: "block",
+            }}
+          >
+            dieselpro@gmail.com
+          </a>
+          <a
+            href={`https://wa.me/${whatsappNumber}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              color: "#25D366",
+              textDecoration: "none",
+              fontSize: "1rem",
+              fontWeight: "bold",
+            }}
+          >
+            WhatsApp
+          </a>
+        </div>
       </div>
-      <div className="mobile-menu" onClick={() => setNavActive(!navActive)}>
-        <i className="fas fa-bars"></i>
-      </div>
+      <button
+        onClick={onCartClick}
+        style={{
+          background: "#fff",
+          color: "#222",
+          border: "none",
+          borderRadius: "4px",
+          padding: "0.5rem 1rem",
+          fontWeight: "bold",
+          display: "flex",
+          alignItems: "center",
+          gap: "0.5rem",
+          position: "relative",
+        }}
+        aria-label="Ver carrito"
+      >
+        <span style={{ fontSize: "1.5rem" }}>🛒</span>
+        <span
+          style={{
+            background: "#e53935",
+            color: "#fff",
+            borderRadius: "50%",
+            padding: "0.2rem 0.6rem",
+            fontSize: "1rem",
+            fontWeight: "bold",
+            position: "absolute",
+            top: "-8px",
+            right: "-8px",
+          }}
+        >
+          {totalCount}
+        </span>
+      </button>
     </header>
   );
 }

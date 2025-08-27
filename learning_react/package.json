@@ -7,10 +7,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@paypal/react-paypal-js": "^8.8.3",
     "@reduxjs/toolkit": "^2.8.2",
     "react": "^18.0.0",
     "react-dom": "^18.0.0",
     "react-redux": "^9.2.0",
+    "react-toastify": "^11.0.5",
+    "redux-persist": "^6.0.0",
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
