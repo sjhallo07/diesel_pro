@@ -1,64 +1,14 @@
-import { StrictMode } from 'react'
-import { createRoot } from 'react-dom/client'
-import './index.css'
-import App from './App.jsx'
-import '@fortawesome/fontawesome-free/css/all.min.css';
 import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App.jsx";
+import "./index.css";
+import '@fortawesome/fontawesome-free/css/all.min.css';
+
+import { Provider } from "react-redux";
 import store from "./store";
 
-createRoot(document.getElementById('root')).render(
-  <StrictMode>
+ReactDOM.createRoot(document.getElementById("root")).render(
+  <Provider store={store}>
     <App />
-  </StrictMode>,
-)
-
-export default function Header() {
-  return (
-    <header>
-      <img
-        src="https://i.postimg.cc/KYJCxC2Y/LOGOTIPOFONDOBLANCO.png"
-        alt="Turbobujias"
-      />
-      <form
-        action="https://www.paypal.com/cgi-bin/webscr"
-        method="post"
-        target="_top"
-      >
-        <input type="hidden" name="cmd" value="_s-xclick" />
-        <input type="hidden" name="hosted_button_id" value="8NYMNJTYXLX5W" />
-        <input type="hidden" name="currency_code" value="USD" />
-        <input
-          type="image"
-          src="https://www.paypalobjects.com/en_US/i/btn/btn_buynowCC_LG.gif"
-          border="0"
-          name="submit"
-          title="PayPal es una forma segura y fácil de pagar en línea."
-          alt="Comprar ahora"
-        />
-      </form>
-      <nav>
-        <ul>
-          <li>
-            <a href="#inicio">Inicio</a>
-          </li>
-          <li>
-            <a href="#productos">Productos</a>
-          </li>
-          <li>
-            <a href="#nosotros">Nosotros</a>
-          </li>
-          <li>
-            <a href="#contacto">Contacto</a>
-          </li>
-        </ul>
-      </nav>
-      <div className="cart-icon">
-        <i className="fas fa-shopping-cart"></i>
-        <span className="cart-count">0</span>
-      </div>
-      <div className="mobile-menu">
-        <i className="fas fa-bars"></i>
-      </div>
-    </header>
-  );
-}
+  </Provider>
+);

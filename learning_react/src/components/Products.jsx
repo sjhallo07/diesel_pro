@@ -3,7 +3,7 @@ import * as XLSX from "xlsx";
 import { useDispatch } from "react-redux";
 import { addToCart } from "../store/cartSlice";
 
-const DUMMY_PRODUCTS = [
+const INITIAL_PRODUCTS = [
   {
     id: 1,
     name: "Bujía Diesel A",
@@ -32,12 +32,38 @@ const DUMMY_PRODUCTS = [
 
 export default function Products() {
   const [filter, setFilter] = useState("all");
+  const [products, setProducts] = useState(INITIAL_PRODUCTS);
   const dispatch = useDispatch();
 
   const filteredProducts =
     filter === "all"
-      ? DUMMY_PRODUCTS
-      : DUMMY_PRODUCTS.filter((p) => p.type === filter);
+      ? products
+      : products.filter((p) => p.type === filter);
+
+  // Lógica para importar productos desde Excel
+  const handleImport = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (evt) => {
+      const data = new Uint8Array(evt.target.result);
+      const workbook = XLSX.read(data, { type: "array" });
+      const sheet = workbook.Sheets[workbook.SheetNames[0]];
+      const rows = XLSX.utils.sheet_to_json(sheet);
+
+      // Espera columnas: name, type, price, stock, img
+      const imported = rows.map((row, idx) => ({
+        id: products.length + idx + 1,
+        name: row.name || `Producto ${products.length + idx + 1}`,
+        type: row.type || "otros",
+        price: Number(row.price) || 0,
+        stock: Number(row.stock) || 0,
+        img: row.img || "https://via.placeholder.com/250x200?text=Producto",
+      }));
+      setProducts((prev) => [...prev, ...imported]);
+    };
+    reader.readAsArrayBuffer(file);
+  };
 
   return (
     <section className="products" id="productos">
@@ -67,6 +93,21 @@ export default function Products() {
             onClick={() => setFilter("repuestos")}
           >
             Repuestos
+          </button>
+        </div>
+        <div className="import-section" style={{ margin: "1em 0" }}>
+          <input
+            type="file"
+            id="excel-file"
+            accept=".xlsx, .xls, .xlsm, .xlsb"
+            style={{ display: "none" }}
+            onChange={handleImport}
+          />
+          <button
+            className="btn"
+            onClick={() => document.getElementById("excel-file").click()}
+          >
+            <i className="fas fa-file-excel"></i> Importar Inventario (Excel)
           </button>
         </div>
         <div className="product-grid" id="product-grid">
