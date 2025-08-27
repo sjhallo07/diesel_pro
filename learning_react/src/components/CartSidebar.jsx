@@ -151,9 +151,11 @@ export default function Products({ onAddToCart }) {
   );
 }
 
+
 import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { removeFromCart, clearCart } from "../store/cartSlice";
+import PaypalButton from "./PaypalButton";
 
 export default function CartSidebar({ onClose, visible }) {
   const [showCheckout, setShowCheckout] = useState(false);
@@ -242,7 +244,8 @@ export default function CartSidebar({ onClose, visible }) {
               &times;
             </button>
             <h2>Checkout</h2>
-            <p>Esta funcionalidad estará disponible próximamente.</p>
+            <p>Paga de forma segura con PayPal:</p>
+            <PaypalButton total={total} />
           </div>
         </div>
       )}

@@ -15,7 +15,7 @@ Aplicación web desarrollada en React + Vite para la gestión de un catálogo de
 
 1. Clona el repositorio y entra al directorio del proyecto:
    ```sh
-   git clone <URL_DEL_REPO>
+   git clone <https://github.com/sjhallo07/diesel_pro.git>
    cd learning_react
    ```
 
